@@ -24,4 +24,6 @@ public interface PosService {
 //    public Product getProduct(String productID);
 
     public String modify(int index, String productID, int amount);
+
+    public boolean emptyCart();
 }

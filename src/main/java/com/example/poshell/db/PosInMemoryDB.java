@@ -47,13 +47,24 @@ public class PosInMemoryDB implements PosDB {
     }
 
 
+    public boolean emptyCart(){
+        //清空购物车
+        if(this.getCart().getItems().isEmpty()){
+            return false;
+        }else{
+            this.getCart().getItems().clear();
+            return true;
+        }
+    }
+
+    @Override
     public String modify(int index, String productID, int amount){
         Product product = getProduct(productID);
         if(product == null){
             return "Error: no such producID";
         }
         if(this.getCart()!=null){
-            if(index>=this.getCart().size()||index<0){
+            if(index>=this.getCart().getItems().size()||index<0){
                 return "Error: invalid index";
             }else{
 

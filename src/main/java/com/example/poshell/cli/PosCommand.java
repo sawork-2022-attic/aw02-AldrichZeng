@@ -33,41 +33,46 @@ public class PosCommand {
 
     @ShellMethod(value = "Add a Product to Cart", key = "a")
     public String addToCart(String productId, int amount) {
-        if (posService.add(productId, amount)) {
-            return posService.getCart().toString();
+        if (posService.getCart() != null) {
+            if (posService.add(productId, amount)) {
+                return posService.getCart().toString();
+            }else{
+                return "Error: no such product";
+            }
+        } else {
+            return "ERROR: you dont have a cart";
         }
-        return "ERROR: you dont have a cart";
     }
 
 
-    @ShellMethod(value = "Print the Cart now", key = {"print","l"})
-    public String print(){
-        if(posService.getCart()!=null){
+    @ShellMethod(value = "Print the Cart now", key = {"print", "l"})
+    public String print() {
+        if (posService.getCart() != null) {
             return posService.getCart().toString();
-        }else{
+        } else {
             return "Error: you didn't create a cart!";
         }
     }
 
-    @ShellMethod(value = "Empty the Cart immediately", key= {"empty","e"})
-    public String empty(){
-        if(posService.getCart()!=null){
-            if(posService.getCart().emptyCart()){
+    @ShellMethod(value = "Empty the Cart immediately", key = {"empty", "e"})
+    public String empty() {
+        if (posService.getCart() != null) {
+            if (posService.emptyCart()) {
                 return "Empty Cart Successfully.";
-            }else{
+            } else {
                 return "Warning: Cart is empty already.";
             }
 
-        }else{
+        } else {
             return "Error: you didn't create a cart!";
         }
     }
 
-    @ShellMethod(value ="Modify the Product", key={"modify","m"})
-    public String modify(int index, String productID, int amount){
-        if(posService.getCart()!=null){
-            return posService.modify(index, productID,amount);
-        }else{
+    @ShellMethod(value = "Modify the Product", key = {"modify", "m"})
+    public String modify(int index, String productID, int amount) {
+        if (posService.getCart() != null) {
+            return posService.modify(index, productID, amount);
+        } else {
             return "Error: you didn't create a cart!";
         }
     }

@@ -86,7 +86,13 @@ public class PosServiceImp implements PosService {
 //        return "Success";
 //    }
 
+    @Override
     public String modify(int index, String productID, int amount) {
         return posDB.modify(index, productID, amount);
+    }
+
+    @Override
+    public boolean emptyCart() {
+        return posDB.emptyCart();
     }
 }

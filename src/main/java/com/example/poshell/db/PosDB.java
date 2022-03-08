@@ -15,4 +15,6 @@ public interface PosDB {
 
     public Product getProduct(String productId);
 
+    public String modify(int index, String productID, int amount);
+
 }

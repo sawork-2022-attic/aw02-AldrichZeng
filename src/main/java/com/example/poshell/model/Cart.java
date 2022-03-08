@@ -1,17 +1,58 @@
 package com.example.poshell.model;
 
+import com.example.poshell.db.PosDB;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.management.remote.rmi._RMIConnection_Stub;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Component
 public class Cart {
 
     private List<Item> items = new ArrayList<>();
 
+
+    private PosDB posDB;
+
+    @Autowired
+    public void setPosDB(PosDB posDB) {
+        this.posDB = posDB;
+    }
+
     public boolean addItem(Item item) {
         return items.add(item);
+    }
+    public int size(){
+        return items.size();
+    }
+    public boolean emptyCart(){
+        //清空购物车
+        if(items.isEmpty()){
+            return false;
+        }else{
+            items.clear();
+            return true;
+        }
+    }
+    public String modify(int index, String productID, int amount){
+        // 根据index修改Cart，index是items中的下标。
+        if(index>=items.size() || index<0){ // 包含items.isEmpty()==true的情况
+            return "Error: Illegal index";
+        }
+        Item item = items.get(index);
+        Product product = posDB.getProduct(productID);
+        if(product == null){
+            return "Error: Illegal productID";
+        }
+        item.setProduct(product);
+        item.setAmount(amount);
+
+        items.set(index, item);
+        return "Success";
     }
 
     @Override

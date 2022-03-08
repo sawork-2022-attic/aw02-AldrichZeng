@@ -2,6 +2,7 @@ package com.example.poshell.biz;
 
 import com.example.poshell.model.Cart;
 import com.example.poshell.model.Product;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public interface PosService {
 
     public boolean add(String productId, int amount);
 
-
     public List<Product> products();
+
+//    public Product getProduct(String productID);
+
+    public String modify(int index, String productID, int amount);
 }

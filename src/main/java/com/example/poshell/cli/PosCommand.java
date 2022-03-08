@@ -36,6 +36,39 @@ public class PosCommand {
         if (posService.add(productId, amount)) {
             return posService.getCart().toString();
         }
-        return "ERROR";
+        return "ERROR: you dont have a cart";
+    }
+
+
+    @ShellMethod(value = "Print the Cart now", key = {"print","l"})
+    public String print(){
+        if(posService.getCart()!=null){
+            return posService.getCart().toString();
+        }else{
+            return "Error: you didn't create a cart!";
+        }
+    }
+
+    @ShellMethod(value = "Empty the Cart immediately", key= {"empty","e"})
+    public String empty(){
+        if(posService.getCart()!=null){
+            if(posService.getCart().emptyCart()){
+                return "Empty Cart Successfully.";
+            }else{
+                return "Warning: Cart is empty already.";
+            }
+
+        }else{
+            return "Error: you didn't create a cart!";
+        }
+    }
+
+    @ShellMethod(value ="Modify the Product", key={"modify","m"})
+    public String modify(int index, String productID, int amount){
+        if(posService.getCart()!=null){
+            return posService.modify(index, productID,amount);
+        }else{
+            return "Error: you didn't create a cart!";
+        }
     }
 }

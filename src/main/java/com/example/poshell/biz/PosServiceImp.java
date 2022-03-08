@@ -49,7 +49,9 @@ public class PosServiceImp implements PosService {
 
         Product product = posDB.getProduct(productId);
         if (product == null) return false;
-
+        if (this.getCart() == null) {
+            return false;
+        }
         this.getCart().addItem(new Item(product, amount));
         return true;
     }
@@ -57,5 +59,34 @@ public class PosServiceImp implements PosService {
     @Override
     public List<Product> products() {
         return posDB.getProducts();
+    }
+
+//    @Override
+//    public Product getProduct(String productID){
+//        return posDB.getProduct(productID);
+//    }
+
+//    @Override
+//    public String modify(int index, String productID, int amount){
+//        // 根据index修改Cart，index是items中的下标。
+//        if(index>=items.size() || index<0){ // 包含items.isEmpty()==true的情况
+//            return "Error: Illegal index";
+//        }
+//        Item item = items.get(index);
+//
+//
+////        Product product = posDB.getProduct(productID);
+//        if(product == null){
+//            return "Error: Illegal productID";
+//        }
+//        item.setProduct(product);
+//        item.setAmount(amount);
+//
+//        items.set(index, item);
+//        return "Success";
+//    }
+
+    public String modify(int index, String productID, int amount) {
+        return posDB.modify(index, productID, amount);
     }
 }
